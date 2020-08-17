@@ -683,7 +683,7 @@ service vendor.qmiproxy /vendor/bin/qmiproxy
 service vendor.netmgrd /vendor/bin/netmgrd
     class main
     user root
-    group root wifi wakelock radio inet
+    group root system wifi wakelock radio inet
 
 service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -O/data/vendor/wifi/wpa/sockets -puse_p2p_group_interface=1 \
