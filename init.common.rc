@@ -128,6 +128,13 @@ on post-fs
     # Wait qseecomd started
     wait_for_prop sys.listeners.registered true
 
+service logger /system/bin/logcat -b all -D -f /cache/boot_log.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
 on late-fs
     # Start devices by sysfs trigger
     start vendor.devstart_sh
@@ -339,6 +346,10 @@ on zygote-start
     chmod 0660 /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
     chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
     chmod 0660 /sys/class/devfreq/soc:qcom,gpubw/min_freq
+
+    # Clear existing log and start the service
+    rm /cache/boot_log.txt
+    start logger
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
